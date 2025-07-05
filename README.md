@@ -1,4 +1,4 @@
-```markdown
+
 <h1 align="center">📊 Excel Data Analyzer</h1>
 <p align="center">
   A modern MERN-based platform to upload Excel files, visualize data, and explore analytics through an interactive dashboard.
