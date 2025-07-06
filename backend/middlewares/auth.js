@@ -2,14 +2,24 @@ const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
   const token = req.header("x-auth-token");
-  if (!token) return res.status(401).json({ error: "Access denied" });
+
+  if (!token) {
+    return res.status(401).json({ error: "No token, authorization denied" });
+  }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "your-super-secret-jwt-key-change-this-in-production");
-    req.user = decoded;
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET ||
+        "your-super-secret-jwt-key-change-this-in-production"
+    );
+
+    req.user = decoded.user; // <--- This is critical!
+
     next();
-  } catch (err) {
-    res.status(400).json({ error: "Invalid token" });
+  } catch (error) {
+    console.error("Token error:", error.message);
+    res.status(401).json({ error: "Token is not valid" });
   }
 };
 

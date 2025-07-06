@@ -14,6 +14,8 @@ import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Upload from "./pages/Upload";
+import Analysis from "./pages/Analysis";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // Component to handle navigation restrictions
 const NavigationHandler = () => {
@@ -77,6 +79,22 @@ const AppRoutes = () => {
               <Upload />
             </ProtectedRoute>
           } 
+        />
+        <Route
+          path="/analysis/:fileId"
+          element={
+            <ProtectedRoute>
+              <Analysis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </>

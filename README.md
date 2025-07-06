@@ -1,156 +1,234 @@
-<<<<<<< HEAD
-=======
+# Excel Analysis Platform
 
->>>>>>> 7983f9c890bd4389dcdae986c50a32166ce5fb07
-<h1 align="center">📊 Excel Data Analyzer</h1>
-<p align="center">
-  A modern MERN-based platform to upload Excel files, visualize data, and explore analytics through an interactive dashboard.
-</p>
+A modern, full-stack web application for uploading, parsing, and visualizing Excel data with interactive charts and comprehensive analytics.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/MERN-Stack-green?style=flat-square" />
-  <img src="https://img.shields.io/badge/Vite-React-blueviolet?style=flat-square" />
-  <img src="https://img.shields.io/badge/TailwindCSS-CSS-blue?style=flat-square" />
-  <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square" />
-</p>
+## 🚀 Features
 
----
+### Core Functionality
+- **Excel File Upload & Parsing**: Upload Excel files (.xlsx, .xls) with automatic parsing using SheetJS
+- **Multi-Sheet Support**: Handle Excel files with multiple sheets
+- **Real-time Data Processing**: Extract column headers, row counts, and sample data
+- **Interactive Chart Generation**: Create various chart types from Excel data
 
-## 🚀 Tech Stack
+### Chart Types Supported
+- **Bar Charts**: Perfect for comparing categories
+- **Line Charts**: Ideal for showing trends over time
+- **Pie Charts**: Great for showing proportions
+- **Doughnut Charts**: Alternative to pie charts with center space
+- **Scatter Plots**: Excellent for correlation analysis
 
-**Frontend:**
-- Vite + React.js
-- Tailwind CSS
-- Chart.js
-- Axios
-- React Router
+### Advanced Features
+- **Column Selection**: Choose X and Y axes from your Excel data
+- **Chart History**: View and reuse previously created charts
+- **Download Options**: Export charts as PNG images, PDF reports, and CSV data
+- **Real-time Dashboard**: Live statistics and activity tracking
+- **User Management**: Complete user authentication and authorization
 
-**Backend:**
-- Node.js + Express.js
-- MongoDB (Mongoose)
-- Multer (for file uploads)
-- XLSX (Excel parser)
-- JWT + Bcrypt (Authentication)
+### Export & Download Features
+- **PNG Export**: Download charts as high-quality PNG images
+- **PDF Reports**: Generate comprehensive PDF reports with charts, statistics, and analysis
+- **Full Analysis PDF**: Create detailed reports including chart history, data insights, and statistical analysis
+- **CSV Export**: Export chart data as CSV files for further analysis
+- **Professional Formatting**: Beautiful, well-formatted PDF reports with proper styling
 
----
+### File Management Features
+- **Multi-Select File Management**: Select multiple files for bulk operations
+- **Bulk Delete**: Delete multiple files simultaneously with confirmation
+- **File Selection Mode**: Toggle between normal and selection modes
+- **Keyboard Shortcuts**: Use Escape key to exit selection mode
+- **Visual Feedback**: Selected files are highlighted with blue border
+- **Smart Selection**: Select all/deselect all functionality
+- **File Statistics**: View file count, rows, columns, and upload dates
 
-## ✅ Features Completed So Far
+### Admin Features
+- **Admin Dashboard**: Comprehensive platform analytics
+- **User Management**: Block/unblock users, delete accounts
+- **Platform Statistics**: Track usage, popular chart types, user activity
+- **Activity Monitoring**: Real-time platform activity feed
 
-### 🔐 Authentication System
-- Secure user registration and login.
-- Passwords hashed with Bcrypt.
-- JWT token-based session management.
-
-### 📁 Excel Upload
-- Upload `.xls` or `.xlsx` files via clean UI.
-- Backend parses and stores the data securely.
-- Validations for file type and size.
-
-### 🧮 Dashboard / Home
-- Personalized dashboard view for each user.
-- Displays uploaded file list with metadata.
-- Interactive 2D visualizations using Chart.js.
-- Modern responsive design via Tailwind CSS.
-
----
-
-## 📁 Project Structure
-
-### Frontend
-```
-
-client/
-├── components/
-│   ├── Navbar.jsx
-│   ├── FileUpload.jsx
-│   └── ChartDisplay.jsx
-├── pages/
-│   ├── Home.jsx
-│   ├── Login.jsx
-│   └── Register.jsx
-├── services/
-│   └── api.js
-├── App.jsx
-└── main.jsx
-
-```
+## 🛠️ Technology Stack
 
 ### Backend
-```
+- **Node.js** with Express.js
+- **MongoDB** with Mongoose ODM
+- **SheetJS (xlsx)** for Excel parsing
+- **JWT** for authentication
+- **bcryptjs** for password hashing
+- **Multer** for file uploads
 
-server/
-├── controllers/
-│   └── fileController.js
-├── routes/
-│   ├── authRoutes.js
-│   └── fileRoutes.js
-├── middleware/
-│   └── authMiddleware.js
-├── models/
-│   ├── User.js
-│   └── File.js
-├── utils/
-│   └── excelParser.js
-├── server.js
-└── .env
+### Frontend
+- **React.js** with functional components and hooks
+- **Redux Toolkit** for state management
+- **Chart.js** with react-chartjs-2 for data visualization
+- **jsPDF** for PDF generation
+- **Tailwind CSS** for styling
+- **Axios** for API communication
 
-````
+## 📊 PDF Report Features
 
----
+### Standard PDF Report
+- File information and metadata
+- Chart visualization with proper sizing
+- File statistics (rows, columns, sheets)
+- Data summary with key metrics
+- Professional formatting and styling
 
-## 🛠️ Getting Started
+### Comprehensive Analysis Report
+- Title page with platform branding
+- Detailed file information and statistics
+- Current chart analysis with visualization
+- Statistical analysis (mean, median, min, max, range)
+- Chart history and previous analyses
+- Data insights and interpretation
+- Multi-page support for large reports
 
-### 🔧 Prerequisites
-- Node.js & npm
-- MongoDB (local or Atlas)
-- Vite CLI (optional but recommended)
+### CSV Export
+- Export chart data as CSV files
+- Proper formatting with headers
+- Compatible with Excel and other spreadsheet applications
 
-### 📦 Installation
+## 📁 File Management
 
-#### 1. Clone the repo
-```bash
-git clone https://github.com/your-username/excel-analyzer.git
-cd excel-analyzer
-````
+### Multi-Select Operations
+1. **Enter Selection Mode**: Click "Select Files" button
+2. **Select Files**: Use checkboxes to select individual files
+3. **Bulk Operations**: 
+   - Use "Select All" to select all files
+   - Use "Deselect All" to clear selection
+4. **Delete Files**: Click "Delete" button to remove selected files
+5. **Exit Mode**: Click "Cancel" or press Escape key
 
-#### 2. Frontend Setup
+### File Operations
+- **View Files**: See all uploaded files with metadata
+- **Analyze Files**: Click "Analyze" to create charts
+- **Delete Files**: Remove files with confirmation dialog
+- **File Information**: View rows, columns, and upload dates
 
-```bash
-cd client
-npm install
-npm run dev
-```
+## 🚀 Getting Started
 
-#### 3. Backend Setup
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB
+- npm or yarn
 
-```bash
-cd server
-npm install
-npm run dev
-```
+### Installation
 
-> Ensure you have a `.env` file configured with your MongoDB URI and JWT secret.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Excel-Analysis-Platform
+   ```
 
----
+2. **Install backend dependencies**
+   ```bash
+   cd backend
+   npm install
+   ```
 
-## 🚧 Upcoming Features
+3. **Install frontend dependencies**
+   ```bash
+   cd ../frontend
+   npm install
+   ```
 
-* 📈 3D Chart Rendering (Three.js)
-* 🧠 AI Insights for uploaded Excel data
-* ⬇️ Export charts/images as PDF
-* 📜 Upload history with search & filters
-* 🧑‍💼 Admin dashboard with analytics
+4. **Set up environment variables**
+   Create a `.env` file in the backend directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   PORT=5000
+   ```
 
----
+5. **Start the backend server**
+   ```bash
+   cd backend
+   npm run dev
+   ```
+
+6. **Start the frontend development server**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+7. **Access the application**
+   Open your browser and navigate to `http://localhost:5173`
+
+## 📖 Usage
+
+### Uploading Excel Files
+1. Navigate to the Upload page
+2. Drag and drop or select an Excel file (.xlsx or .xls)
+3. Wait for the file to be processed
+4. Click "Analyze Data" to proceed to analysis
+
+### Creating Charts
+1. Select the desired chart type (Bar, Line, Pie, Doughnut, Scatter)
+2. Choose X and Y axes from your data columns
+3. Click "Generate Chart" to create the visualization
+4. Use the download options to export your analysis
+
+### Managing Files
+1. **View Files**: Go to the Home dashboard to see all uploaded files
+2. **Select Files**: Click "Select Files" to enter selection mode
+3. **Bulk Delete**: Select multiple files and click "Delete"
+4. **Analyze Files**: Click "Analyze" on individual files
+
+### Exporting Reports
+- **PNG**: Quick download of the chart as an image
+- **PDF Report**: Standard report with chart and basic statistics
+- **Full Analysis**: Comprehensive report with detailed analysis and insights
+- **CSV Export**: Raw data export for further processing
+
+## 🔧 API Endpoints
+
+### Analysis Routes
+- `POST /api/analysis/chart` - Generate chart data
+- `GET /api/analysis/file/:fileId/charts` - Get chart history
+- `GET /api/analysis/pdf-data/:fileId` - Get comprehensive data for PDF generation
+- `POST /api/analysis/save-chart` - Save chart analysis
+
+### Upload Routes
+- `POST /api/upload/excel` - Upload Excel file
+- `GET /api/upload/file/:fileId` - Get file data
+- `GET /api/upload/files` - Get all user files
+- `DELETE /api/upload/file/:fileId` - Delete a file
+
+### Dashboard Routes
+- `GET /api/dashboard/stats` - Get user dashboard statistics
+- `GET /api/dashboard/files` - Get user files
 
 ## 🤝 Contributing
 
-Pull requests are welcome!
-Feel free to fork, clone, and enhance this project.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
----
+## 📝 License
 
-> Built with 💡 passion and 📂 data.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+If you encounter any issues or have questions, please:
+1. Check the existing issues
+2. Create a new issue with detailed information
+3. Include error messages and steps to reproduce
+
+## 🔮 Future Enhancements
+
+- [ ] Real-time collaboration features
+- [ ] Advanced statistical analysis
+- [ ] Machine learning insights
+- [ ] Custom chart themes
+- [ ] Bulk file processing
+- [ ] API rate limiting
+- [ ] Advanced user roles and permissions
+- [ ] File sharing between users
+- [ ] File versioning and history
+- [ ] Advanced file search and filtering
 
 ```
 
