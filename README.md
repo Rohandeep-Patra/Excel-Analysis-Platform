@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7983f9c890bd4389dcdae986c50a32166ce5fb07
 <h1 align="center">📊 Excel Data Analyzer</h1>
 <p align="center">
   A modern MERN-based platform to upload Excel files, visualize data, and explore analytics through an interactive dashboard.
