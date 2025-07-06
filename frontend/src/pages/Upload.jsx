@@ -56,7 +56,7 @@ const Upload = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("/api/upload/excel", formData, {
+      const res = await axios.post("/api/upload/", formData, {
         headers: {
           "x-auth-token": token,
           "Content-Type": "multipart/form-data",
@@ -68,7 +68,13 @@ const Upload = () => {
           setUploadProgress(progress);
         },
       });
-      setMessage("File uploaded successfully: " + res.data.file);
+      
+      // Validate response data
+      if (!res.data || !res.data.file) {
+        throw new Error("Invalid response from server");
+      }
+      
+      setMessage("File uploaded successfully: " + res.data.file.originalName);
       setFile(null);
       e.target.reset();
       setUploadedFile(res.data);
@@ -260,19 +266,19 @@ const Upload = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div className="bg-slate-600/50 rounded-lg p-4">
                   <p className="text-slate-400 text-sm">Rows</p>
-                  <p className="text-white font-semibold text-lg">{uploadedFile.data.rows}</p>
+                  <p className="text-white font-semibold text-lg">{uploadedFile.file?.rowCount ?? '-'}</p>
                 </div>
                 <div className="bg-slate-600/50 rounded-lg p-4">
                   <p className="text-slate-400 text-sm">Columns</p>
-                  <p className="text-white font-semibold text-lg">{uploadedFile.data.columns}</p>
+                  <p className="text-white font-semibold text-lg">{uploadedFile.file?.columnCount ?? '-'}</p>
                 </div>
                 <div className="bg-slate-600/50 rounded-lg p-4">
-                  <p className="text-slate-400 text-sm">File Size</p>
-                  <p className="text-white font-semibold text-lg">{uploadedFile.file}</p>
+                  <p className="text-slate-400 text-sm">File Name</p>
+                  <p className="text-white font-semibold text-lg">{uploadedFile.file?.originalName ?? '-'}</p>
                 </div>
               </div>
               <button
-                onClick={() => navigate(`/analysis/${uploadedFile.fileId}`)}
+                onClick={() => navigate(`/analysis/${uploadedFile.file?.id}`)}
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Analyze Data

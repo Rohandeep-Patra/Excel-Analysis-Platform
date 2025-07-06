@@ -8,7 +8,7 @@ const activitySchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["upload", "analysis", "delete", "error"],
+    enum: ["upload", "analysis", "delete", "error", "register", "login", "profile_update", "password_change", "account_deletion"],
     required: true
   },
   description: {

@@ -17,6 +17,22 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (profileData, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth;
+      const response = await axios.put("/api/auth/profile", profileData, {
+        headers: { 'x-auth-token': token }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Profile update error:', error.response?.data || error.message);
+      return rejectWithValue(error.response?.data?.error || error.message);
+    }
+  }
+);
+
 // Load initial state from localStorage
 const loadState = () => {
   try {
@@ -132,6 +148,23 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Registration failed";
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        
+        // Update localStorage
+        const authData = {
+          user: action.payload.user,
+          token: state.token,
+          loading: false,
+          error: null,
+          isAuthenticated: true,
+        };
+        
+        localStorage.setItem('auth', JSON.stringify(authData));
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.error = action.payload || 'Profile update failed';
       });
   },
 });

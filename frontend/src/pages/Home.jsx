@@ -8,6 +8,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, token } = useSelector((state) => state.auth);
+  
   const [currentTime, setCurrentTime] = useState(new Date());
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -121,7 +122,7 @@ const Home = () => {
     
     setDeletingFiles(true);
     try {
-      await axios.delete(`/api/upload/file/${fileId}`, {
+      await axios.delete(`/api/upload/${fileId}`, {
         headers: { "x-auth-token": token }
       });
       
@@ -296,7 +297,7 @@ const Home = () => {
         <div className="mb-8">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-4xl font-bold text-white mb-2">Welcome back, {user?.name}! 👋</h2>
+              <h2 className="text-4xl font-bold text-white mb-2">Welcome back, {user?.name || 'User'}! 👋</h2>
               <p className="text-slate-300 text-lg">Here's what's happening with your data analysis today.</p>
             </div>
             <div className="text-right">
@@ -326,13 +327,13 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-slate-400 text-sm font-medium">Total Files</p>
-                <p className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-white">
                   {loading ? (
                     <div className="animate-pulse bg-slate-600 h-8 w-16 rounded"></div>
                   ) : (
                     formatNumber(dashboardData?.totalFiles || 0)
                   )}
-                </p>
+                </div>
               </div>
               <div className="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -346,13 +347,13 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-slate-400 text-sm font-medium">Processed Today</p>
-                <p className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-white">
                   {loading ? (
                     <div className="animate-pulse bg-slate-600 h-8 w-16 rounded"></div>
                   ) : (
                     formatNumber(dashboardData?.processedToday || 0)
                   )}
-                </p>
+                </div>
               </div>
               <div className="w-12 h-12 bg-emerald-600/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -366,13 +367,13 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-slate-400 text-sm font-medium">Total Rows</p>
-                <p className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-white">
                   {loading ? (
                     <div className="animate-pulse bg-slate-600 h-8 w-16 rounded"></div>
                   ) : (
                     formatNumber(dashboardData?.totalRows || 0)
                   )}
-                </p>
+                </div>
               </div>
               <div className="w-12 h-12 bg-cyan-600/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -386,13 +387,13 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-slate-400 text-sm font-medium">Storage Used</p>
-                <p className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-white">
                   {loading ? (
                     <div className="animate-pulse bg-slate-600 h-8 w-16 rounded"></div>
                   ) : (
                     formatFileSize(dashboardData?.storageUsed || 0)
                   )}
-                </p>
+                </div>
               </div>
               <div className="w-12 h-12 bg-amber-600/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -420,14 +421,14 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-emerald-600/20 to-teal-600/20 backdrop-blur-lg rounded-2xl p-8 border border-slate-700/50 hover:bg-emerald-600/30 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+          <div className="bg-gradient-to-br from-emerald-600/20 to-teal-600/20 backdrop-blur-lg rounded-2xl p-8 border border-slate-700/50 hover:bg-emerald-600/30 transition-all duration-300 transform hover:scale-105 cursor-pointer" onClick={() => navigate("/history")}>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">View Analysis</h3>
+              <h3 className="text-xl font-semibold text-white mb-2">View History</h3>
               <p className="text-slate-300 mb-4">Explore your previous file analyses and insights</p>
               <button className="bg-slate-700/50 hover:bg-slate-700 text-white px-6 py-2 rounded-lg transition-all duration-300 border border-slate-600 hover:border-slate-500">
                 View History
@@ -435,7 +436,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-slate-600/20 to-gray-600/20 backdrop-blur-lg rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-600/30 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+          <div className="bg-gradient-to-br from-slate-600/20 to-gray-600/20 backdrop-blur-lg rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-600/30 transition-all duration-300 transform hover:scale-105 cursor-pointer" onClick={() => navigate("/settings")}>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-slate-600 to-gray-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -453,7 +454,7 @@ const Home = () => {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700/50">
+        <div className="bg-slate-800/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700/50 mb-8">
           <h3 className="text-lg font-bold text-white mb-4">Recent Activity</h3>
           <div className="space-y-3 max-h-64 overflow-y-auto">
             {dashboardData?.recentActivity?.map((activity, index) => (

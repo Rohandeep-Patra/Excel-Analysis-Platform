@@ -29,17 +29,17 @@ router.post("/chart", auth, async (req, res) => {
 
     // Process data based on chart type
     let chartData = {};
-    
+
     switch (chartType) {
-      case 'bar':
-      case 'line':
+      case "bar":
+      case "line":
         chartData = processBarLineData(data, xIndex, yIndex);
         break;
-      case 'pie':
-      case 'doughnut':
+      case "pie":
+      case "doughnut":
         chartData = processPieData(data, xIndex, yIndex);
         break;
-      case 'scatter':
+      case "scatter":
         chartData = processScatterData(data, xIndex, yIndex);
         break;
       default:
@@ -56,8 +56,8 @@ router.post("/chart", auth, async (req, res) => {
         chartType,
         xAxis,
         yAxis,
-        chartData
-      }
+        chartData,
+      },
     });
 
     await activity.save();
@@ -65,9 +65,8 @@ router.post("/chart", auth, async (req, res) => {
     res.json({
       success: true,
       chartData,
-      message: `${chartType} chart generated successfully`
+      message: `${chartType} chart generated successfully`,
     });
-
   } catch (error) {
     console.error("Chart generation error:", error);
     res.status(500).json({ error: "Error generating chart" });
@@ -83,14 +82,13 @@ router.get("/file/:fileId/charts", auth, async (req, res) => {
     const activities = await Activity.find({
       user: userId,
       "details.fileId": fileId,
-      action: "chart_created"
+      action: "chart_created",
     }).sort({ createdAt: -1 });
-    
+
     res.json({
       charts: activities,
-      fileName: file.originalName
+      fileName: file.originalName,
     });
-
   } catch (error) {
     console.error("Get charts error:", error);
     res.status(500).json({ error: "Error retrieving charts" });
@@ -101,8 +99,8 @@ router.get("/file/:fileId/charts", auth, async (req, res) => {
 function processBarLineData(data, xIndex, yIndex) {
   const labels = [];
   const values = [];
-  
-  data.forEach(row => {
+
+  data.forEach((row) => {
     if (row[xIndex] && row[yIndex]) {
       labels.push(row[xIndex].toString());
       values.push(parseFloat(row[yIndex]) || 0);
@@ -111,21 +109,23 @@ function processBarLineData(data, xIndex, yIndex) {
 
   return {
     labels,
-    datasets: [{
-      label: 'Data',
-      data: values,
-      backgroundColor: 'rgba(59, 130, 246, 0.5)',
-      borderColor: 'rgba(59, 130, 246, 1)',
-      borderWidth: 1
-    }]
+    datasets: [
+      {
+        label: "Data",
+        data: values,
+        backgroundColor: "rgba(59, 130, 246, 0.5)",
+        borderColor: "rgba(59, 130, 246, 1)",
+        borderWidth: 1,
+      },
+    ],
   };
 }
 
 function processPieData(data, xIndex, yIndex) {
   const labels = [];
   const values = [];
-  
-  data.forEach(row => {
+
+  data.forEach((row) => {
     if (row[xIndex] && row[yIndex]) {
       labels.push(row[xIndex].toString());
       values.push(parseFloat(row[yIndex]) || 0);
@@ -134,40 +134,44 @@ function processPieData(data, xIndex, yIndex) {
 
   return {
     labels,
-    datasets: [{
-      data: values,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.8)',
-        'rgba(54, 162, 235, 0.8)',
-        'rgba(255, 206, 86, 0.8)',
-        'rgba(75, 192, 192, 0.8)',
-        'rgba(153, 102, 255, 0.8)',
-        'rgba(255, 159, 64, 0.8)'
-      ]
-    }]
+    datasets: [
+      {
+        data: values,
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.8)",
+          "rgba(54, 162, 235, 0.8)",
+          "rgba(255, 206, 86, 0.8)",
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(153, 102, 255, 0.8)",
+          "rgba(255, 159, 64, 0.8)",
+        ],
+      },
+    ],
   };
 }
 
 function processScatterData(data, xIndex, yIndex) {
   const points = [];
-  
-  data.forEach(row => {
+
+  data.forEach((row) => {
     if (row[xIndex] && row[yIndex]) {
       points.push({
         x: parseFloat(row[xIndex]) || 0,
-        y: parseFloat(row[yIndex]) || 0
+        y: parseFloat(row[yIndex]) || 0,
       });
     }
   });
 
   return {
-    datasets: [{
-      label: 'Data Points',
-      data: points,
-      backgroundColor: 'rgba(59, 130, 246, 0.6)',
-      borderColor: 'rgba(59, 130, 246, 1)',
-      pointRadius: 6
-    }]
+    datasets: [
+      {
+        label: "Data Points",
+        data: points,
+        backgroundColor: "rgba(59, 130, 246, 0.6)",
+        borderColor: "rgba(59, 130, 246, 1)",
+        pointRadius: 6,
+      },
+    ],
   };
 }
 
@@ -190,10 +194,10 @@ router.get("/:fileId", auth, async (req, res) => {
           sheetName: file.allSheets[0]?.name,
           rows: file.rowCount,
           columns: file.columnCount,
-          headers: file.columnHeaders
+          headers: file.columnHeaders,
         },
-        parsedData: file.allSheets[0]?.data || []
-      }
+        parsedData: file.allSheets[0]?.data || [],
+      },
     });
   } catch (error) {
     console.error("Get file error:", error);
@@ -210,7 +214,7 @@ router.get("/history/:fileId", auth, async (req, res) => {
     const analyses = await Activity.find({
       userId,
       fileId: fileId,
-      type: { $in: ["analysis", "chart_created"] }
+      type: { $in: ["analysis", "chart_created"] },
     }).sort({ createdAt: -1 });
 
     res.json({ analyses });
@@ -241,8 +245,8 @@ router.post("/save-chart", auth, async (req, res) => {
       metadata: {
         chartType,
         chartData,
-        chartConfig
-      }
+        chartConfig,
+      },
     });
     await activity.save();
 
@@ -269,15 +273,17 @@ router.get("/pdf-data/:fileId", auth, async (req, res) => {
     const analyses = await Activity.find({
       userId,
       fileId: fileId,
-      type: { $in: ["analysis", "chart_created"] }
+      type: { $in: ["analysis", "chart_created"] },
     }).sort({ createdAt: -1 });
 
     // Get chart history
     const chartHistory = await Activity.find({
       userId,
       fileId: fileId,
-      type: "analysis"
-    }).sort({ createdAt: -1 }).limit(20);
+      type: "analysis",
+    })
+      .sort({ createdAt: -1 })
+      .limit(20);
 
     // Calculate file statistics
     const fileStats = {
@@ -286,20 +292,24 @@ router.get("/pdf-data/:fileId", auth, async (req, res) => {
       totalSheets: file.allSheets.length,
       fileSize: file.fileSize,
       uploadDate: file.createdAt,
-      lastModified: file.updatedAt
+      lastModified: file.updatedAt,
     };
 
     // Calculate analysis statistics
     const analysisStats = {
       totalAnalyses: analyses.length,
-      chartTypes: [...new Set(analyses.map(a => a.metadata?.chartType).filter(Boolean))],
+      chartTypes: [
+        ...new Set(analyses.map((a) => a.metadata?.chartType).filter(Boolean)),
+      ],
       lastAnalysis: analyses[0]?.createdAt,
-      mostUsedChartType: analyses.length > 0 ? 
-        analyses.reduce((acc, curr) => {
-          const type = curr.metadata?.chartType;
-          acc[type] = (acc[type] || 0) + 1;
-          return acc;
-        }, {}) : {}
+      mostUsedChartType:
+        analyses.length > 0
+          ? analyses.reduce((acc, curr) => {
+              const type = curr.metadata?.chartType;
+              acc[type] = (acc[type] || 0) + 1;
+              return acc;
+            }, {})
+          : {},
     };
 
     res.json({
@@ -307,18 +317,17 @@ router.get("/pdf-data/:fileId", auth, async (req, res) => {
         id: file._id,
         originalName: file.originalName,
         stats: fileStats,
-        allSheets: file.allSheets
+        allSheets: file.allSheets,
       },
       analyses: analyses,
       chartHistory: chartHistory,
       analysisStats: analysisStats,
-      generatedAt: new Date()
+      generatedAt: new Date(),
     });
-
   } catch (error) {
     console.error("Get PDF data error:", error);
     res.status(500).json({ error: "Failed to fetch PDF data" });
   }
 });
 
-module.exports = router; 
+module.exports = router;
