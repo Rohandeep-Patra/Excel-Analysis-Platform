@@ -13,6 +13,10 @@ const Home = () => {
     navigate("/");
   };
 
+  const handleUploadClick = () => {
+    navigate("/upload");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-white shadow-lg">
@@ -21,6 +25,12 @@ const Home = () => {
             <h1 className="text-2xl font-bold text-gray-800">Excel Analysis</h1>
             <div className="flex items-center space-x-4">
               <span className="text-gray-600">Welcome, {user?.name}</span>
+              <button
+                onClick={() => navigate("/upload")}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Upload Files
+              </button>
               <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
@@ -40,7 +50,10 @@ const Home = () => {
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
               <h3 className="text-xl font-semibold text-blue-800 mb-2">Upload Excel Files</h3>
               <p className="text-blue-600 mb-4">Upload and analyze your Excel files</p>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors">
+              <button 
+                onClick={handleUploadClick}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-colors"
+              >
                 Upload File
               </button>
             </div>
